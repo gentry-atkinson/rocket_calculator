@@ -8,11 +8,15 @@ import numpy as np
 G0 = 9.806      #g, the og little g
 P0 = 1013.25    #mean sea level air pressure
 
+########## Engine equations###################################
+
 def delta_v_from_isp_and_mass(isp, m0, mf):
     return isp * G0 * np.log(m0/mf)
 
 def isp_from_exhaust_vel(ve):
     return ve/G0
+
+########## Atmospheric equations##############################
 
 def drag_from_b_and_vel(b, vel):
     return b * v * v
@@ -41,3 +45,8 @@ def pres_from_altitude(temp, alt):
     M = 0.0289644 #molar mass of air
     R = 8.31432 #universal gas constant
     return P0 * np.exp((-1*G0*M*alt)/(R*temp))
+
+def alt_from_ro(ro):
+    RO0 = 1.225 #avg ro at sea level kg/m3
+    dropm = 0.0001148 #delta ro per meter
+    return (RO0-ro)/dropm
